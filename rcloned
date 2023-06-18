@@ -25,7 +25,7 @@ start)
   }
   fusermount -zuq $LOCAL >/dev/null 2>&1
   mkdir -p $LOCAL
-  rclone mount $REMOTE $LOCAL --config $CONFIG --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 >/dev/null 2>&1 &
+  rclone mount $REMOTE $LOCAL --config $CONFIG --copy-links --no-gzip-encoding --no-check-certificate --allow-other --use-mmap --dir-cache-time 12h --cache-dir=/mnt/mmcblk1p3/rclonemount/cache --vfs-cache-mode full --buffer-size 1024M --vfs-read-chunk-size 16M --vfs-read-chunk-size-limit 64M --vfs-cache-max-size 10G --allow-non-empty --umask 000 >/dev/null 2>&1 &
   sleep 3;
   NAME_PID="$(ps -C $NAME -o pid=|head -n1 |grep -o '[0-9]\{1,\}')"
   [ -n "$NAME_PID" ] && {
